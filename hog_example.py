@@ -9,13 +9,13 @@ gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 # получение координат лица
 detector = dlib.get_frontal_face_detector()
 faces_location = detector(image, 1)
-print(faces_location)
-x = faces_location[0].left()
-y = faces_location[0].top()
-w = faces_location[0].bottom()
-h = faces_location[0].right()
+for (i, rect) in enumerate(faces_location):
+	x = rect.left()
+	y = rect.top()
+	w = rect.right() - x
+	h = rect.bottom() - y
 # обводка лица
-cv2.rectangle(image, (x, y), (h, w), (0, 255, 0), 2)
+cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
 # вывод изображения
 cv2.imshow("Faces found", image)
 cv2.waitKey(0)
